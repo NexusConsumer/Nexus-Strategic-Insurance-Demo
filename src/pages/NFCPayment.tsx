@@ -21,11 +21,11 @@ const NFCPayment = () => {
       animationRef.current.stop();
       animationRef.current.play();
 
-      // Reset animation after it completes (6 seconds to ensure full animation)
+      // Reset animation 1 second before full completion for snappier feel
       setTimeout(() => {
         setIsAnimating(false);
         animationRef.current?.stop();
-      }, 6000);
+      }, 5000);
     }
   };
 
