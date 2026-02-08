@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import type { DotLottie } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
 import ApplePayAnimation from '../assets/animations/Apple Pay Face ID Checkout.lottie';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
@@ -9,16 +10,23 @@ import BottomNav from '../components/layout/BottomNav';
 const NFCPayment = () => {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
+  const animationRef = useRef<DotLottie | null>(null);
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsAnimating(true);
 
-    // Reset animation after 3.5 seconds (animation duration with 1.2x speed)
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 3500);
+    if (animationRef.current) {
+      setIsAnimating(true);
+      animationRef.current.stop();
+      animationRef.current.play();
+
+      // Reset animation after 3.5 seconds
+      setTimeout(() => {
+        setIsAnimating(false);
+        animationRef.current?.stop();
+      }, 3500);
+    }
   };
 
   return (
@@ -77,38 +85,36 @@ const NFCPayment = () => {
 
           {/* Apple Pay Animation Section */}
           <div className="flex flex-col items-center justify-center space-y-4">
-            {isAnimating ? (
-              <>
-                <div className="relative flex items-center justify-center">
-                  <DotLottieReact
-                    key={Date.now()}
-                    src={ApplePayAnimation}
-                    loop={false}
-                    autoplay={true}
-                    speed={1.2}
-                    dotLottieRefCallback={(dotLottie) => {
-                      dotLottie?.play();
-                    }}
-                    style={{ width: 160, height: 160 }}
-                  />
-                </div>
-                {/* Instruction Text */}
-                <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight">
-                  Hold Near Reader
-                </p>
-              </>
-            ) : (
-              <div className="text-center space-y-3">
-                <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="material-icons-round text-primary text-3xl">
-                    contactless
-                  </span>
-                </div>
-                <p className="text-slate-500 dark:text-zinc-400 text-base font-normal tracking-tight">
-                  Tap card to pay
-                </p>
+            {/* Animation - Always rendered, shown/hidden with CSS */}
+            <div className={`${isAnimating ? 'block' : 'hidden'}`}>
+              <div className="relative flex items-center justify-center">
+                <DotLottieReact
+                  src={ApplePayAnimation}
+                  loop={false}
+                  autoplay={false}
+                  speed={1.2}
+                  dotLottieRefCallback={(dotLottie) => {
+                    animationRef.current = dotLottie;
+                  }}
+                  style={{ width: 160, height: 160 }}
+                />
               </div>
-            )}
+              <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight text-center">
+                Hold Near Reader
+              </p>
+            </div>
+
+            {/* Initial State - Contactless Icon */}
+            <div className={`text-center space-y-3 ${isAnimating ? 'hidden' : 'block'}`}>
+              <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="material-icons-round text-primary text-3xl">
+                  contactless
+                </span>
+              </div>
+              <p className="text-slate-500 dark:text-zinc-400 text-base font-normal tracking-tight">
+                Tap card to pay
+              </p>
+            </div>
           </div>
         </main>
 
