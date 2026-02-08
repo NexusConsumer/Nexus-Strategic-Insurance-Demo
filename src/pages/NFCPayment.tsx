@@ -19,6 +19,12 @@ const NFCPayment = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    // Stop unsuccessful animation if running
+    if (isUnsuccessful) {
+      setIsUnsuccessful(false);
+      unsuccessfulRef.current?.stop();
+    }
+
     if (animationRef.current) {
       setIsAnimating(true);
       animationRef.current.stop();
@@ -35,6 +41,12 @@ const NFCPayment = () => {
   const handleIconClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // Stop successful animation if running
+    if (isAnimating) {
+      setIsAnimating(false);
+      animationRef.current?.stop();
+    }
 
     if (unsuccessfulRef.current) {
       setIsUnsuccessful(true);
@@ -56,12 +68,12 @@ const NFCPayment = () => {
 
         {/* Header */}
         <header className="pt-14 px-6 flex justify-between items-center">
-          <h1 className="text-3xl font-semibold tracking-tight" style={{ fontFamily: '-apple-system, SF Pro Display, system-ui, sans-serif' }}>
-            Wallet
-          </h1>
           <button className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center hover:opacity-80 transition-opacity">
             <span className="material-icons-round text-lg">more_horiz</span>
           </button>
+          <h1 className="text-3xl font-semibold tracking-tight" style={{ fontFamily: '-apple-system, SF Pro Display, system-ui, sans-serif' }}>
+            Wallet
+          </h1>
         </header>
 
         {/* Main Content */}
@@ -107,9 +119,9 @@ const NFCPayment = () => {
           </div>
 
           {/* Apple Pay Animation Section */}
-          <div className="flex flex-col items-center justify-center space-y-4 mt-12">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-12 relative">
             {/* Successful Payment Animation */}
-            <div className={`${isAnimating ? 'block' : 'hidden'}`}>
+            <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
               <div className="relative flex items-center justify-center">
                 <DotLottieReact
                   src={ApplePayAnimation}
@@ -121,13 +133,13 @@ const NFCPayment = () => {
                   }}
                 />
               </div>
-              <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight text-center">
+              <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight text-center mt-4">
                 Hold Near Reader
               </p>
             </div>
 
             {/* Unsuccessful Payment Animation */}
-            <div className={`${isUnsuccessful ? 'block' : 'hidden'}`}>
+            <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
               <div className="relative flex items-center justify-center">
                 <DotLottieReact
                   src={UnsuccessfulAnimation}
@@ -139,10 +151,13 @@ const NFCPayment = () => {
                   }}
                 />
               </div>
+              <p className="text-red-500 text-lg font-semibold tracking-tight text-center mt-4">
+                Payment Declined
+              </p>
             </div>
 
             {/* Initial State - Contactless Icon */}
-            <div className={`text-center space-y-3 ${isAnimating || isUnsuccessful ? 'hidden' : 'block'}`}>
+            <div className={`text-center space-y-3 transition-opacity duration-500 ${isAnimating || isUnsuccessful ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               <div
                 onClick={handleIconClick}
                 className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors active:scale-95"
