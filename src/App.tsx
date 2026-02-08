@@ -3,6 +3,7 @@ import { AppProvider } from './contexts/AppContext';
 import Home from './pages/Home';
 import ReportIncident from './pages/ReportIncident';
 import NFCPayment from './pages/NFCPayment';
+import PolicyCardIssuance from './pages/PolicyCardIssuance';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/report" element={<ReportIncident />} />
             <Route path="/nfc-payment" element={<NFCPayment />} />
+            <Route path="/policy-card-issuance" element={<PolicyCardIssuance />} />
             <Route path="/profile" element={<Home />} />
           </Routes>
         </div>

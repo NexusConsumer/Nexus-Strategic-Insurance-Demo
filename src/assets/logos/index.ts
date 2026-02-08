@@ -15,3 +15,6 @@ export { default as NexusWideLogoAnimation } from './Nexus_Wide_Logo_Animation_B
 export { default as MastercardLogo } from './mastercard-logo-transperant.png';
 export { default as MigdalLogo } from './migdal_logo_transparent.png';
 export { default as ExcelLogo } from './excel_logo.png';
+export { default as AddToApplePayButton } from './add-to-apple-pay.png';
+export { default as GooglePayLogo } from './google-pay-logo.png';
+export { default as ApplePayLogo } from './apple-pay-logo.png';

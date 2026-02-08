@@ -1,21 +1,64 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import type { DotLottie } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
+// @ts-ignore
 import ApplePayAnimation from '../assets/animations/Apple Pay Face ID Checkout.lottie';
+// @ts-ignore
 import UnsuccessfulAnimation from '../assets/animations/Card Payment Unsuccessful.lottie';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
 import BottomNav from '../components/layout/BottomNav';
+import SideMenu from '../components/layout/SideMenu';
 
 const NFCPayment = () => {
-  const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
   const [isUnsuccessful, setIsUnsuccessful] = useState(false);
   const animationRef = useRef<DotLottie | null>(null);
   const unsuccessfulRef = useRef<DotLottie | null>(null);
 
+  // Drag to scroll state
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Side menu state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Drag to scroll handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+
+    // Attach global handlers for continuous dragging
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!scrollContainerRef.current) return;
+      e.preventDefault();
+      const x = e.pageX - scrollContainerRef.current.offsetLeft;
+      const walk = (x - startX) * 2;
+      scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+  };
+
   const handleCardClick = (e: React.MouseEvent) => {
+    // Don't trigger card click if user was dragging
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -30,11 +73,11 @@ const NFCPayment = () => {
       animationRef.current.stop();
       animationRef.current.play();
 
-      // Reset animation 1.5 seconds before full completion for snappier feel
+      // Reset animation after 6.5 seconds
       setTimeout(() => {
         setIsAnimating(false);
         animationRef.current?.stop();
-      }, 4500);
+      }, 6500);
     }
   };
 
@@ -62,14 +105,17 @@ const NFCPayment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center py-8">
-      <div className="w-full max-w-[430px] min-h-[900px] bg-background-light dark:bg-background-dark relative shadow-2xl overflow-y-auto">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="w-full max-w-[430px] min-h-screen bg-background-light dark:bg-background-dark relative overflow-y-auto">
         <IOSStatusBar />
 
         {/* Header */}
         <header className="pt-14 px-6 flex justify-between items-center">
-          <button className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center hover:opacity-80 transition-opacity">
-            <span className="material-icons-round text-lg">more_horiz</span>
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center hover:opacity-80 transition-opacity"
+          >
+            <span className="material-icons-round text-lg">menu</span>
           </button>
           <h1 className="text-3xl font-semibold tracking-tight" style={{ fontFamily: '-apple-system, SF Pro Display, system-ui, sans-serif' }}>
             Wallet
@@ -79,12 +125,17 @@ const NFCPayment = () => {
         {/* Main Content */}
         <main className="flex flex-col items-center pt-8 pb-32 min-h-[750px]">
           {/* Scrollable Card Gallery */}
-          <div className="w-full overflow-x-auto px-6 no-scrollbar">
+          <div
+            ref={scrollContainerRef}
+            onMouseDown={handleMouseDown}
+            className={`w-full overflow-x-auto px-6 no-scrollbar ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            style={{ userSelect: 'none' }}
+          >
             <div className="flex gap-4 pb-2">
-              {/* Original Card - Dark */}
+              {/* First Card - Black */}
               <div
                 onClick={handleCardClick}
-                className="flex-shrink-0 w-[340px] aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer card-texture"
+                className="flex-shrink-0 w-[340px] aspect-[1.7/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer bg-black"
               >
             {/* Card Top Section */}
             <div className="flex justify-between items-start">
@@ -121,9 +172,9 @@ const NFCPayment = () => {
             </div>
           </div>
 
-          {/* Green Card */}
-          <div className="flex-shrink-0 w-[340px] aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer"
-               style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)' }}>
+          {/* Second Card - Blue */}
+          <div className="flex-shrink-0 w-[340px] aspect-[1.7/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer"
+               style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)' }}>
             <div className="flex justify-between items-start">
               <div className="-ml-2 h-20 flex items-center">
                 <img src={MigdalLogo} alt="Migdal" className="h-20 brightness-0 invert mix-blend-screen" style={{ filter: 'brightness(0) invert(1)', mixBlendMode: 'screen' }} />
@@ -138,20 +189,19 @@ const NFCPayment = () => {
             </div>
           </div>
 
-          {/* Blue Card */}
-          <div className="flex-shrink-0 w-[340px] aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer"
-               style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)' }}>
+          {/* Third Card - White */}
+          <div className="flex-shrink-0 w-[340px] aspect-[1.7/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer bg-white">
             <div className="flex justify-between items-start">
               <div className="-ml-2 h-20 flex items-center">
-                <img src={MigdalLogo} alt="Migdal" className="h-20 brightness-0 invert mix-blend-screen" style={{ filter: 'brightness(0) invert(1)', mixBlendMode: 'screen' }} />
+                <img src={MigdalLogo} alt="Migdal" className="h-20" />
               </div>
-              <span className="text-white text-xl font-medium tracking-widest opacity-90">824V</span>
+              <span className="text-gray-800 text-xl font-medium tracking-widest opacity-90">824V</span>
             </div>
             <div className="flex justify-between items-end">
               <div className="relative ml-16">
                 <img src={MastercardLogo} alt="Mastercard" className="h-28 opacity-90" style={{ transform: 'translate(20px, 20px)' }} />
               </div>
-              <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">contactless</span>
+              <span className="material-icons-round text-gray-400 text-3xl rotate-90 -mr-1">contactless</span>
             </div>
           </div>
         </div>
@@ -201,7 +251,7 @@ const NFCPayment = () => {
             </div>
 
             {/* Text Below Animations/Icon */}
-            <div className="mt-3 text-center">
+            <div className="mt-1 text-center">
               {isAnimating && (
                 <p className="text-slate-500 dark:text-zinc-400 text-sm font-normal tracking-tight">
                   Hold Near Reader
@@ -224,6 +274,9 @@ const NFCPayment = () => {
         {/* Bottom Navigation */}
         <BottomNav />
       </div>
+
+      {/* Side Menu */}
+      <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </div>
   );
 };
