@@ -57,12 +57,14 @@ const NFCPayment = () => {
             {/* Card Top Section */}
             <div className="flex justify-between items-start">
               {/* Migdal Logo */}
-              <img
-                src={MigdalLogo}
-                alt="Migdal"
-                className="h-20 opacity-90 brightness-0 invert -ml-2"
-                style={{ filter: 'brightness(0) invert(1) contrast(2)' }}
-              />
+              <div className="-ml-2 h-20 flex items-center">
+                <img
+                  src={MigdalLogo}
+                  alt="Migdal"
+                  className="h-20 brightness-0 invert mix-blend-screen"
+                  style={{ filter: 'brightness(0) invert(1)', mixBlendMode: 'screen' }}
+                />
+              </div>
               {/* Card Last 4 Digits */}
               <span className="text-white text-xl font-medium tracking-widest opacity-90">
                 822V
@@ -75,7 +77,7 @@ const NFCPayment = () => {
               <img
                 src={MastercardLogo}
                 alt="Mastercard"
-                className="h-20 opacity-90 -ml-2"
+                className="h-28 opacity-90 -ml-2 mt-2"
               />
               {/* Contactless Icon */}
               <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">
