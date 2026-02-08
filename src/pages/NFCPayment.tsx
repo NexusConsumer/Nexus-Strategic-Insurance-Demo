@@ -16,9 +16,13 @@ const NFCPayment = () => {
     setIsAnimating(true);
   };
 
+  const handleAnimationComplete = () => {
+    setIsAnimating(false);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center">
-      <div className="w-full max-w-[430px] h-screen bg-background-light dark:bg-background-dark relative shadow-2xl overflow-y-auto">
+    <div className="min-h-screen bg-gray-800 flex items-center justify-center py-8">
+      <div className="w-full max-w-[430px] min-h-[900px] bg-background-light dark:bg-background-dark relative shadow-2xl overflow-y-auto">
         <IOSStatusBar />
 
         {/* Header */}
@@ -35,7 +39,7 @@ const NFCPayment = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex flex-col items-center justify-between pt-8 px-6 pb-32 min-h-[calc(100vh-8rem)]">
+        <main className="flex flex-col items-center justify-between pt-8 px-6 pb-32 min-h-[750px]">
           {/* Virtual Card */}
           <div
             onClick={handleCardClick}
@@ -79,6 +83,7 @@ const NFCPayment = () => {
                     src={ApplePayAnimation}
                     loop={false}
                     autoplay={true}
+                    onComplete={handleAnimationComplete}
                     style={{ width: 160, height: 160 }}
                   />
                 </div>
