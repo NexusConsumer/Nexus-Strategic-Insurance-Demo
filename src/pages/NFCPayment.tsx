@@ -121,37 +121,41 @@ const NFCPayment = () => {
           {/* Apple Pay Animation Section */}
           <div className="flex flex-col items-center justify-center mt-12">
             {/* Animation Container - Positioned exactly where icon is */}
-            <div className="relative w-16 h-16 mx-auto">
+            <div className="relative mx-auto" style={{ width: '64px', minHeight: '64px' }}>
               {/* Successful Payment Animation */}
-              <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                <DotLottieReact
-                  src={ApplePayAnimation}
-                  loop={false}
-                  autoplay={false}
-                  speed={1}
-                  dotLottieRefCallback={(dotLottie) => {
-                    animationRef.current = dotLottie;
-                  }}
-                  style={{ width: '64px', height: '64px' }}
-                />
+              <div className={`absolute top-0 left-1/2 -translate-x-1/2 flex items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                <div style={{ maxWidth: '64px', maxHeight: '64px' }}>
+                  <DotLottieReact
+                    src={ApplePayAnimation}
+                    loop={false}
+                    autoplay={false}
+                    speed={1}
+                    dotLottieRefCallback={(dotLottie) => {
+                      animationRef.current = dotLottie;
+                    }}
+                    style={{ width: '100%', height: 'auto', maxWidth: '64px' }}
+                  />
+                </div>
               </div>
 
               {/* Unsuccessful Payment Animation */}
-              <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                <DotLottieReact
-                  src={UnsuccessfulAnimation}
-                  loop={false}
-                  autoplay={false}
-                  speed={1}
-                  dotLottieRefCallback={(dotLottie) => {
-                    unsuccessfulRef.current = dotLottie;
-                  }}
-                  style={{ width: '64px', height: '64px' }}
-                />
+              <div className={`absolute top-0 left-1/2 -translate-x-1/2 flex items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                <div style={{ maxWidth: '64px', maxHeight: '64px' }}>
+                  <DotLottieReact
+                    src={UnsuccessfulAnimation}
+                    loop={false}
+                    autoplay={false}
+                    speed={1}
+                    dotLottieRefCallback={(dotLottie) => {
+                      unsuccessfulRef.current = dotLottie;
+                    }}
+                    style={{ width: '100%', height: 'auto', maxWidth: '64px' }}
+                  />
+                </div>
               </div>
 
               {/* Initial State - Contactless Icon */}
-              <div className={`absolute inset-0 transition-opacity duration-500 ${isAnimating || isUnsuccessful ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              <div className={`transition-opacity duration-500 ${isAnimating || isUnsuccessful ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <div
                   onClick={handleIconClick}
                   className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors active:scale-95"
