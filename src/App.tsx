@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import Home from './pages/Home';
 import ReportIncident from './pages/ReportIncident';
+import NFCPayment from './pages/NFCPayment';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/report" element={<ReportIncident />} />
             <Route path="/wallet" element={<Home />} />
             <Route path="/profile" element={<Home />} />
+            <Route path="/nfc-payment" element={<NFCPayment />} />
           </Routes>
         </div>
       </BrowserRouter>

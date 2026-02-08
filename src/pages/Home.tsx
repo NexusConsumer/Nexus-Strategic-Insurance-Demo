@@ -1,9 +1,11 @@
 import { useApp } from '../contexts/AppContext';
+import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import VirtualCard from '../components/ui/VirtualCard';
 
 const Home = () => {
   const { language } = useApp();
+  const navigate = useNavigate();
 
   const transactions = [
     {
@@ -90,8 +92,11 @@ const Home = () => {
         </section>
 
         {/* Virtual Card */}
-        <section className="relative">
+        <section className="relative cursor-pointer" onClick={() => navigate('/nfc-payment')}>
           <VirtualCard balance={12788.56} />
+          <div className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500">
+            {language === 'he' ? 'לחץ לתשלום ב-NFC' : 'Tap to pay with NFC'}
+          </div>
         </section>
 
         {/* Recent Transactions */}
