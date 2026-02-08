@@ -77,7 +77,7 @@ const NFCPayment = () => {
               <img
                 src={MastercardLogo}
                 alt="Mastercard"
-                className="h-28 opacity-90 ml-6 mb-4"
+                className="h-28 opacity-90 ml-6 -mb-2"
               />
               {/* Contactless Icon */}
               <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">
