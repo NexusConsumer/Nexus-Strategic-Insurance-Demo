@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
+import ApplePayAnimation from '../assets/animations/Apple Pay Face ID Checkout.lottie';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
 import BottomNav from '../components/layout/BottomNav';
 
@@ -57,19 +59,15 @@ const NFCPayment = () => {
             </div>
           </div>
 
-          {/* NFC Animation Section */}
-          <div className="flex-1 flex flex-col items-center justify-center space-y-6 mt-16">
+          {/* Apple Pay Animation Section */}
+          <div className="flex-1 flex flex-col items-center justify-center space-y-6">
             <div className="relative flex items-center justify-center">
-              {/* Outer pulse ring */}
-              <div className="absolute w-24 h-24 rounded-full border-2 border-primary/20 animate-pulse-ring"></div>
-              {/* Middle pulse ring */}
-              <div className="absolute w-20 h-20 rounded-full border-2 border-primary/40 animate-pulse-ring-delayed"></div>
-              {/* Center NFC icon */}
-              <div className="relative w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center bg-white dark:bg-zinc-900 shadow-lg">
-                <div className="w-7 h-11 border-2 border-primary rounded-md relative flex items-center justify-center overflow-hidden">
-                  <div className="absolute top-0 w-3 h-0.5 bg-primary rounded-b-sm"></div>
-                </div>
-              </div>
+              <DotLottieReact
+                src={ApplePayAnimation}
+                loop
+                autoplay
+                style={{ width: 280, height: 280 }}
+              />
             </div>
 
             {/* Instruction Text */}
