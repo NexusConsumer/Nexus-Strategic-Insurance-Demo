@@ -74,11 +74,14 @@ const NFCPayment = () => {
             {/* Card Bottom Section */}
             <div className="flex justify-between items-end">
               {/* Mastercard Logo */}
-              <img
-                src={MastercardLogo}
-                alt="Mastercard"
-                className="h-28 opacity-90 ml-6 -mb-2"
-              />
+              <div className="relative ml-8">
+                <img
+                  src={MastercardLogo}
+                  alt="Mastercard"
+                  className="h-28 opacity-90"
+                  style={{ transform: 'translateY(8px)' }}
+                />
+              </div>
               {/* Contactless Icon */}
               <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">
                 contactless
