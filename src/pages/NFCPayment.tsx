@@ -21,11 +21,11 @@ const NFCPayment = () => {
       animationRef.current.stop();
       animationRef.current.play();
 
-      // Reset animation after 3.5 seconds
+      // Reset animation after it completes (6 seconds to ensure full animation)
       setTimeout(() => {
         setIsAnimating(false);
         animationRef.current?.stop();
-      }, 3500);
+      }, 6000);
     }
   };
 
@@ -92,11 +92,11 @@ const NFCPayment = () => {
                   src={ApplePayAnimation}
                   loop={false}
                   autoplay={false}
-                  speed={1.2}
+                  speed={1}
                   dotLottieRefCallback={(dotLottie) => {
                     animationRef.current = dotLottie;
                   }}
-                  style={{ width: 160, height: 160 }}
+                  style={{ width: 280, height: 280 }}
                 />
               </div>
               <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight text-center">
