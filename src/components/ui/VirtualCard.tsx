@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import nexusWideLogoBlack from '../../assets/logos/Nexus_wide_logo_blak.png';
 
 interface VirtualCardProps {
   cardNumber?: string;
@@ -25,7 +26,7 @@ const VirtualCard = ({
       {/* Card content */}
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-12">
-          <div className="text-2xl font-black italic tracking-tighter">TaPay</div>
+          <img src={nexusWideLogoBlack} alt="Nexus" className="h-8 brightness-0 invert opacity-90" />
           <span className="material-icons-round text-4xl opacity-80">contactless</span>
         </div>
 
