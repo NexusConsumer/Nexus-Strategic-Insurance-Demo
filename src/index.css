@@ -11,10 +11,13 @@
   }
 
   body {
-    @apply font-display text-text-main bg-background-light dark:bg-background-dark;
+    @apply font-display text-text-main bg-gray-900;
     font-family: 'Assistant', 'Heebo', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   html[dir="rtl"] {
