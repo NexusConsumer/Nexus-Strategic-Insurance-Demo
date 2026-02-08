@@ -77,12 +77,15 @@ const NFCPayment = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex flex-col items-center pt-8 px-6 pb-32 min-h-[750px]">
-          {/* Virtual Card */}
-          <div
-            onClick={handleCardClick}
-            className="w-full aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer card-texture"
-          >
+        <main className="flex flex-col items-center pt-8 pb-32 min-h-[750px]">
+          {/* Scrollable Card Gallery */}
+          <div className="w-full overflow-x-auto px-6 no-scrollbar">
+            <div className="flex gap-4 pb-2">
+              {/* Original Card - Dark */}
+              <div
+                onClick={handleCardClick}
+                className="flex-shrink-0 w-[340px] aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer card-texture"
+              >
             {/* Card Top Section */}
             <div className="flex justify-between items-start">
               {/* Migdal Logo */}
@@ -118,40 +121,70 @@ const NFCPayment = () => {
             </div>
           </div>
 
+          {/* Green Card */}
+          <div className="flex-shrink-0 w-[340px] aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer"
+               style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)' }}>
+            <div className="flex justify-between items-start">
+              <div className="-ml-2 h-20 flex items-center">
+                <img src={MigdalLogo} alt="Migdal" className="h-20 brightness-0 invert mix-blend-screen" style={{ filter: 'brightness(0) invert(1)', mixBlendMode: 'screen' }} />
+              </div>
+              <span className="text-white text-xl font-medium tracking-widest opacity-90">823V</span>
+            </div>
+            <div className="flex justify-between items-end">
+              <div className="relative ml-16">
+                <img src={MastercardLogo} alt="Mastercard" className="h-28 opacity-90" style={{ transform: 'translate(20px, 20px)' }} />
+              </div>
+              <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">contactless</span>
+            </div>
+          </div>
+
+          {/* Blue Card */}
+          <div className="flex-shrink-0 w-[340px] aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer"
+               style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)' }}>
+            <div className="flex justify-between items-start">
+              <div className="-ml-2 h-20 flex items-center">
+                <img src={MigdalLogo} alt="Migdal" className="h-20 brightness-0 invert mix-blend-screen" style={{ filter: 'brightness(0) invert(1)', mixBlendMode: 'screen' }} />
+              </div>
+              <span className="text-white text-xl font-medium tracking-widest opacity-90">824V</span>
+            </div>
+            <div className="flex justify-between items-end">
+              <div className="relative ml-16">
+                <img src={MastercardLogo} alt="Mastercard" className="h-28 opacity-90" style={{ transform: 'translate(20px, 20px)' }} />
+              </div>
+              <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">contactless</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
           {/* Apple Pay Animation Section */}
           <div className="flex flex-col items-center justify-center mt-12">
-            {/* Animation Container - Positioned exactly where icon is */}
-            <div className="relative mx-auto" style={{ width: '64px', minHeight: '64px' }}>
+            {/* Animation Container */}
+            <div className="relative mx-auto flex items-center justify-center min-h-[200px]">
               {/* Successful Payment Animation */}
-              <div className={`absolute top-0 left-1/2 -translate-x-1/2 flex items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                <div style={{ maxWidth: '64px', maxHeight: '64px' }}>
-                  <DotLottieReact
-                    src={ApplePayAnimation}
-                    loop={false}
-                    autoplay={false}
-                    speed={1}
-                    dotLottieRefCallback={(dotLottie) => {
-                      animationRef.current = dotLottie;
-                    }}
-                    style={{ width: '100%', height: 'auto', maxWidth: '64px' }}
-                  />
-                </div>
+              <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                <DotLottieReact
+                  src={ApplePayAnimation}
+                  loop={false}
+                  autoplay={false}
+                  speed={1}
+                  dotLottieRefCallback={(dotLottie) => {
+                    animationRef.current = dotLottie;
+                  }}
+                />
               </div>
 
               {/* Unsuccessful Payment Animation */}
-              <div className={`absolute top-0 left-1/2 -translate-x-1/2 flex items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                <div style={{ maxWidth: '64px', maxHeight: '64px' }}>
-                  <DotLottieReact
-                    src={UnsuccessfulAnimation}
-                    loop={false}
-                    autoplay={false}
-                    speed={1}
-                    dotLottieRefCallback={(dotLottie) => {
-                      unsuccessfulRef.current = dotLottie;
-                    }}
-                    style={{ width: '100%', height: 'auto', maxWidth: '64px' }}
-                  />
-                </div>
+              <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                <DotLottieReact
+                  src={UnsuccessfulAnimation}
+                  loop={false}
+                  autoplay={false}
+                  speed={1}
+                  dotLottieRefCallback={(dotLottie) => {
+                    unsuccessfulRef.current = dotLottie;
+                  }}
+                />
               </div>
 
               {/* Initial State - Contactless Icon */}
