@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
@@ -7,6 +8,15 @@ import BottomNav from '../components/layout/BottomNav';
 
 const NFCPayment = () => {
   const navigate = useNavigate();
+  const [isAnimating, setIsAnimating] = useState(false);
+  const dotLottieRef = useRef<any>(null);
+
+  const handleCardClick = () => {
+    setIsAnimating(true);
+    if (dotLottieRef.current) {
+      dotLottieRef.current.play();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-800 flex items-center justify-center">
@@ -27,9 +37,12 @@ const NFCPayment = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex flex-col items-center pt-8 px-6 pb-32 min-h-[calc(100vh-3rem)]">
+        <main className="flex flex-col items-center justify-between pt-8 px-6 pb-32 min-h-[calc(100vh-8rem)]">
           {/* Virtual Card */}
-          <div className="w-full aspect-[1.58/1] rounded-2xl shadow-2xl relative p-8 flex flex-col justify-between transform transition-transform hover:scale-[1.02] cursor-pointer card-texture">
+          <div
+            onClick={handleCardClick}
+            className="w-full aspect-[1.58/1] rounded-2xl shadow-2xl relative p-8 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer card-texture"
+          >
             {/* Card Top Section */}
             <div className="flex justify-between items-start">
               {/* Migdal Logo */}
@@ -59,21 +72,43 @@ const NFCPayment = () => {
             </div>
           </div>
 
-          {/* Apple Pay Animation Section */}
-          <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-            <div className="relative flex items-center justify-center">
-              <DotLottieReact
-                src={ApplePayAnimation}
-                loop
-                autoplay
-                style={{ width: 280, height: 280 }}
-              />
-            </div>
-
-            {/* Instruction Text */}
-            <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight">
-              Hold Near Reader
+          {/* Card Hint */}
+          {!isAnimating && (
+            <p className="text-sm text-slate-400 dark:text-slate-500 mt-3 animate-pulse">
+              👆 Tap card to activate payment
             </p>
+          )}
+
+          {/* Apple Pay Animation Section */}
+          <div className="flex flex-col items-center justify-center space-y-4">
+            {isAnimating ? (
+              <>
+                <div className="relative flex items-center justify-center">
+                  <DotLottieReact
+                    dotLottieRefCallback={dotLottieRef}
+                    src={ApplePayAnimation}
+                    loop={false}
+                    autoplay={false}
+                    style={{ width: 160, height: 160 }}
+                  />
+                </div>
+                {/* Instruction Text */}
+                <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight">
+                  Hold Near Reader
+                </p>
+              </>
+            ) : (
+              <div className="text-center space-y-3">
+                <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="material-icons-round text-primary text-3xl">
+                    contactless
+                  </span>
+                </div>
+                <p className="text-slate-500 dark:text-zinc-400 text-base font-normal tracking-tight">
+                  Tap card to pay
+                </p>
+              </div>
+            )}
           </div>
         </main>
 
