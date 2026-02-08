@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
@@ -9,13 +9,11 @@ import BottomNav from '../components/layout/BottomNav';
 const NFCPayment = () => {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
-  const dotLottieRef = useRef<any>(null);
 
-  const handleCardClick = () => {
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsAnimating(true);
-    if (dotLottieRef.current) {
-      dotLottieRef.current.play();
-    }
   };
 
   return (
@@ -72,23 +70,15 @@ const NFCPayment = () => {
             </div>
           </div>
 
-          {/* Card Hint */}
-          {!isAnimating && (
-            <p className="text-sm text-slate-400 dark:text-slate-500 mt-3 animate-pulse">
-              👆 Tap card to activate payment
-            </p>
-          )}
-
           {/* Apple Pay Animation Section */}
           <div className="flex flex-col items-center justify-center space-y-4">
             {isAnimating ? (
               <>
                 <div className="relative flex items-center justify-center">
                   <DotLottieReact
-                    dotLottieRefCallback={dotLottieRef}
                     src={ApplePayAnimation}
                     loop={false}
-                    autoplay={false}
+                    autoplay={true}
                     style={{ width: 160, height: 160 }}
                   />
                 </div>
