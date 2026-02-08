@@ -11,5 +11,7 @@ export { default as NexusMainLoaderAnimation } from './Nexus_Main_Loader_Animati
 export { default as WhiteNexusMainLoaderAnimation } from './White_Nexus_Main_Loader_Animation.gif';
 export { default as NexusWideLogoAnimation } from './Nexus_Wide_Logo_Animation_Black_Whithout_Slogan.gif';
 
-// Other logos
+// Partner & Payment logos
+export { default as MastercardLogo } from './mastercard-logo-transperant.png';
+export { default as MigdalLogo } from './migdal_logo_transparent.png';
 export { default as ExcelLogo } from './excel_logo.png';

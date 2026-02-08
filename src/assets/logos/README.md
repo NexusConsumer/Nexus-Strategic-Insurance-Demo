@@ -5,10 +5,16 @@ This directory contains all logo assets for the TaPay Insurance Demo project.
 ## Available Logos
 
 ### Static Logos (PNG)
+
+#### Nexus Logos
 - **nexus_logo.png** (156KB) - Main Nexus logo
 - **Nexus_wide_logo_blak.png** (41KB) - Wide Nexus logo in black
 - **Nexus_Logo_only_Icon_Black.png** (35KB) - Nexus icon only (black)
 - **Nexus_Main_Logo_G.png** (37KB) - Nexus main logo variant G
+
+#### Partner & Payment Logos
+- **mastercard-logo-transperant.png** (14KB) - Mastercard logo (transparent)
+- **migdal_logo_transparent.png** (55KB) - Migdal Insurance logo (transparent)
 - **excel_logo.png** (28KB) - Excel logo
 
 ### Animated Logos (GIF)
@@ -25,11 +31,15 @@ import {
   NexusLogo,
   NexusWideLogoBlack,
   NexusLogoIconBlack,
+  MastercardLogo,
+  MigdalLogo,
   NexusMainLoaderAnimation
 } from '@/assets/logos';
 
 // In your component
 <img src={NexusLogo} alt="Nexus Logo" />
+<img src={MastercardLogo} alt="Mastercard" />
+<img src={MigdalLogo} alt="Migdal Insurance" />
 ```
 
 Or import directly:
