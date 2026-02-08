@@ -4,13 +4,16 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import type { DotLottie } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
 import ApplePayAnimation from '../assets/animations/Apple Pay Face ID Checkout.lottie';
+import UnsuccessfulAnimation from '../assets/animations/Card Payment Unsuccessful.lottie';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
 import BottomNav from '../components/layout/BottomNav';
 
 const NFCPayment = () => {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isUnsuccessful, setIsUnsuccessful] = useState(false);
   const animationRef = useRef<DotLottie | null>(null);
+  const unsuccessfulRef = useRef<DotLottie | null>(null);
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -29,6 +32,23 @@ const NFCPayment = () => {
     }
   };
 
+  const handleIconClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (unsuccessfulRef.current) {
+      setIsUnsuccessful(true);
+      unsuccessfulRef.current.stop();
+      unsuccessfulRef.current.play();
+
+      // Reset after animation completes
+      setTimeout(() => {
+        setIsUnsuccessful(false);
+        unsuccessfulRef.current?.stop();
+      }, 3000);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-800 flex items-center justify-center py-8">
       <div className="w-full max-w-[430px] min-h-[900px] bg-background-light dark:bg-background-dark relative shadow-2xl overflow-y-auto">
@@ -36,12 +56,9 @@ const NFCPayment = () => {
 
         {/* Header */}
         <header className="pt-14 px-6 flex justify-between items-center">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-primary text-lg font-medium hover:opacity-70 transition-opacity"
-          >
-            Done
-          </button>
+          <h1 className="text-3xl font-semibold tracking-tight" style={{ fontFamily: '-apple-system, SF Pro Display, system-ui, sans-serif' }}>
+            Wallet
+          </h1>
           <button className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center hover:opacity-80 transition-opacity">
             <span className="material-icons-round text-lg">more_horiz</span>
           </button>
@@ -91,7 +108,7 @@ const NFCPayment = () => {
 
           {/* Apple Pay Animation Section */}
           <div className="flex flex-col items-center justify-center space-y-4 mt-12">
-            {/* Animation - Always rendered, shown/hidden with CSS */}
+            {/* Successful Payment Animation */}
             <div className={`${isAnimating ? 'block' : 'hidden'}`}>
               <div className="relative flex items-center justify-center">
                 <DotLottieReact
@@ -109,9 +126,27 @@ const NFCPayment = () => {
               </p>
             </div>
 
+            {/* Unsuccessful Payment Animation */}
+            <div className={`${isUnsuccessful ? 'block' : 'hidden'}`}>
+              <div className="relative flex items-center justify-center">
+                <DotLottieReact
+                  src={UnsuccessfulAnimation}
+                  loop={false}
+                  autoplay={false}
+                  speed={1}
+                  dotLottieRefCallback={(dotLottie) => {
+                    unsuccessfulRef.current = dotLottie;
+                  }}
+                />
+              </div>
+            </div>
+
             {/* Initial State - Contactless Icon */}
-            <div className={`text-center space-y-3 ${isAnimating ? 'hidden' : 'block'}`}>
-              <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+            <div className={`text-center space-y-3 ${isAnimating || isUnsuccessful ? 'hidden' : 'block'}`}>
+              <div
+                onClick={handleIconClick}
+                className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors active:scale-95"
+              >
                 <span className="material-icons-round text-primary text-3xl">
                   contactless
                 </span>
