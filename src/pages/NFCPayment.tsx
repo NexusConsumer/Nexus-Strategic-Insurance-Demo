@@ -7,8 +7,8 @@ const NFCPayment = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark flex items-center justify-center">
-      <div className="w-full max-w-[430px] min-h-screen bg-background-light dark:bg-background-dark relative">
+    <div className="min-h-screen bg-gray-800 flex items-center justify-center">
+      <div className="w-full max-w-[430px] h-screen bg-background-light dark:bg-background-dark relative shadow-2xl overflow-y-auto">
         <IOSStatusBar />
 
         {/* Header */}
@@ -25,7 +25,7 @@ const NFCPayment = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex flex-col items-center pt-8 px-6">
+        <main className="flex flex-col items-center pt-8 px-6 pb-32 min-h-[calc(100vh-3rem)]">
           {/* Virtual Card */}
           <div className="w-full aspect-[1.58/1] rounded-2xl shadow-2xl relative p-8 flex flex-col justify-between transform transition-transform hover:scale-[1.02] cursor-pointer card-texture">
             {/* Card Top Section */}
@@ -34,7 +34,7 @@ const NFCPayment = () => {
               <img
                 src={MigdalLogo}
                 alt="Migdal"
-                className="h-7 opacity-90 brightness-0 invert"
+                className="h-12 opacity-90 brightness-0 invert"
               />
               {/* Card Last 4 Digits */}
               <span className="text-white text-xl font-medium tracking-widest opacity-90">
@@ -48,7 +48,7 @@ const NFCPayment = () => {
               <img
                 src={MastercardLogo}
                 alt="Mastercard"
-                className="h-8 opacity-90"
+                className="h-12 opacity-90"
               />
               {/* Contactless Icon */}
               <span className="material-icons-round text-white/40 text-3xl rotate-90">
