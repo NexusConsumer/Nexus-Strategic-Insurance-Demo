@@ -15,10 +15,10 @@ const NFCPayment = () => {
     e.stopPropagation();
     setIsAnimating(true);
 
-    // Reset animation after 4 seconds (animation duration)
+    // Reset animation after 3.5 seconds (animation duration with 1.2x speed)
     setTimeout(() => {
       setIsAnimating(false);
-    }, 4000);
+    }, 3500);
   };
 
   return (
@@ -81,9 +81,14 @@ const NFCPayment = () => {
               <>
                 <div className="relative flex items-center justify-center">
                   <DotLottieReact
+                    key={Date.now()}
                     src={ApplePayAnimation}
                     loop={false}
                     autoplay={true}
+                    speed={1.2}
+                    dotLottieRefCallback={(dotLottie) => {
+                      dotLottie?.play();
+                    }}
                     style={{ width: 160, height: 160 }}
                   />
                 </div>
