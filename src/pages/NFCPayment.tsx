@@ -119,10 +119,11 @@ const NFCPayment = () => {
           </div>
 
           {/* Apple Pay Animation Section */}
-          <div className="flex flex-col items-center justify-center space-y-4 mt-12 relative">
-            {/* Successful Payment Animation */}
-            <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-              <div className="relative flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center mt-12">
+            {/* Animation Container - Positioned exactly where icon is */}
+            <div className="relative w-16 h-16 mx-auto">
+              {/* Successful Payment Animation */}
+              <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 <DotLottieReact
                   src={ApplePayAnimation}
                   loop={false}
@@ -131,16 +132,12 @@ const NFCPayment = () => {
                   dotLottieRefCallback={(dotLottie) => {
                     animationRef.current = dotLottie;
                   }}
+                  style={{ width: '64px', height: '64px' }}
                 />
               </div>
-              <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight text-center mt-4">
-                Hold Near Reader
-              </p>
-            </div>
 
-            {/* Unsuccessful Payment Animation */}
-            <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-              <div className="relative flex items-center justify-center">
+              {/* Unsuccessful Payment Animation */}
+              <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isUnsuccessful ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 <DotLottieReact
                   src={UnsuccessfulAnimation}
                   loop={false}
@@ -149,26 +146,40 @@ const NFCPayment = () => {
                   dotLottieRefCallback={(dotLottie) => {
                     unsuccessfulRef.current = dotLottie;
                   }}
+                  style={{ width: '64px', height: '64px' }}
                 />
               </div>
-              <p className="text-red-500 text-lg font-semibold tracking-tight text-center mt-4">
-                Payment Declined
-              </p>
+
+              {/* Initial State - Contactless Icon */}
+              <div className={`absolute inset-0 transition-opacity duration-500 ${isAnimating || isUnsuccessful ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                <div
+                  onClick={handleIconClick}
+                  className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors active:scale-95"
+                >
+                  <span className="material-icons-round text-primary text-3xl">
+                    contactless
+                  </span>
+                </div>
+              </div>
             </div>
 
-            {/* Initial State - Contactless Icon */}
-            <div className={`text-center space-y-3 transition-opacity duration-500 ${isAnimating || isUnsuccessful ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-              <div
-                onClick={handleIconClick}
-                className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors active:scale-95"
-              >
-                <span className="material-icons-round text-primary text-3xl">
-                  contactless
-                </span>
-              </div>
-              <p className="text-slate-500 dark:text-zinc-400 text-base font-normal tracking-tight">
-                Tap card to pay
-              </p>
+            {/* Text Below Animations/Icon */}
+            <div className="mt-3 text-center">
+              {isAnimating && (
+                <p className="text-slate-500 dark:text-zinc-400 text-sm font-normal tracking-tight">
+                  Hold Near Reader
+                </p>
+              )}
+              {isUnsuccessful && (
+                <p className="text-red-500 text-sm font-semibold tracking-tight">
+                  Payment Declined
+                </p>
+              )}
+              {!isAnimating && !isUnsuccessful && (
+                <p className="text-slate-500 dark:text-zinc-400 text-base font-normal tracking-tight">
+                  Tap card to pay
+                </p>
+              )}
             </div>
           </div>
         </main>
