@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
+import BottomNav from '../components/layout/BottomNav';
 
 const NFCPayment = () => {
   const navigate = useNavigate();
@@ -78,10 +79,8 @@ const NFCPayment = () => {
           </div>
         </main>
 
-        {/* Home Indicator */}
-        <footer className="absolute bottom-2 left-0 right-0 flex justify-center">
-          <div className="w-32 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
-        </footer>
+        {/* Bottom Navigation */}
+        <BottomNav />
       </div>
     </div>
   );

@@ -12,9 +12,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/report" element={<ReportIncident />} />
-            <Route path="/wallet" element={<Home />} />
-            <Route path="/profile" element={<Home />} />
             <Route path="/nfc-payment" element={<NFCPayment />} />
+            <Route path="/profile" element={<Home />} />
           </Routes>
         </div>
       </BrowserRouter>

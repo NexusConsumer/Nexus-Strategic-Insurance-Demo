@@ -11,7 +11,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { path: '/', icon: 'home', labelHe: 'ראשי', labelEn: 'Home' },
   { path: '/report', icon: 'report_problem', labelHe: 'דיווח', labelEn: 'Report' },
-  { path: '/wallet', icon: 'account_balance_wallet', labelHe: 'ארנק', labelEn: 'Wallet' },
+  { path: '/nfc-payment', icon: 'account_balance_wallet', labelHe: 'ארנק', labelEn: 'Wallet' },
   { path: '/profile', icon: 'person_outline', labelHe: 'פרופיל', labelEn: 'Profile' },
 ];
 
