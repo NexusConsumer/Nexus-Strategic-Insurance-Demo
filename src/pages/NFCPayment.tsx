@@ -96,7 +96,6 @@ const NFCPayment = () => {
                   dotLottieRefCallback={(dotLottie) => {
                     animationRef.current = dotLottie;
                   }}
-                  style={{ width: 280, height: 280 }}
                 />
               </div>
               <p className="text-slate-500 dark:text-zinc-400 text-lg font-normal tracking-tight text-center">
