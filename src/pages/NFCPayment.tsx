@@ -60,7 +60,7 @@ const NFCPayment = () => {
               <img
                 src={MigdalLogo}
                 alt="Migdal"
-                className="h-12 opacity-90 brightness-0 invert"
+                className="h-16 opacity-90 brightness-0 invert"
               />
               {/* Card Last 4 Digits */}
               <span className="text-white text-xl font-medium tracking-widest opacity-90">
@@ -74,7 +74,7 @@ const NFCPayment = () => {
               <img
                 src={MastercardLogo}
                 alt="Mastercard"
-                className="h-12 opacity-90"
+                className="h-16 opacity-90"
               />
               {/* Contactless Icon */}
               <span className="material-icons-round text-white/40 text-3xl rotate-90">
