@@ -52,7 +52,7 @@ const NFCPayment = () => {
           {/* Virtual Card */}
           <div
             onClick={handleCardClick}
-            className="w-full aspect-[1.58/1] rounded-2xl shadow-2xl relative p-8 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer card-texture"
+            className="w-full aspect-[1.58/1] rounded-2xl shadow-2xl relative p-6 flex flex-col justify-between transform transition-transform active:scale-[0.98] cursor-pointer card-texture"
           >
             {/* Card Top Section */}
             <div className="flex justify-between items-start">
@@ -60,7 +60,8 @@ const NFCPayment = () => {
               <img
                 src={MigdalLogo}
                 alt="Migdal"
-                className="h-16 opacity-90 brightness-0 invert"
+                className="h-20 opacity-90 brightness-0 invert -ml-2"
+                style={{ filter: 'brightness(0) invert(1) contrast(2)' }}
               />
               {/* Card Last 4 Digits */}
               <span className="text-white text-xl font-medium tracking-widest opacity-90">
@@ -74,10 +75,10 @@ const NFCPayment = () => {
               <img
                 src={MastercardLogo}
                 alt="Mastercard"
-                className="h-16 opacity-90"
+                className="h-20 opacity-90 -ml-2"
               />
               {/* Contactless Icon */}
-              <span className="material-icons-round text-white/40 text-3xl rotate-90">
+              <span className="material-icons-round text-white/40 text-3xl rotate-90 -mr-1">
                 contactless
               </span>
             </div>
