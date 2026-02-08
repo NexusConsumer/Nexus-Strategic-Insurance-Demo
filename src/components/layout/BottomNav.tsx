@@ -21,7 +21,7 @@ const BottomNav = () => {
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 right-0 bg-surface-light/80 dark:bg-surface-dark/80 ios-blur border-t border-slate-100 dark:border-slate-800 px-8 py-4 pb-10 flex justify-between items-center z-40">
+      <nav className="absolute bottom-0 left-0 right-0 bg-surface-light/80 dark:bg-surface-dark/80 ios-blur border-t border-slate-100 dark:border-slate-800 px-8 py-4 pb-10 flex justify-between items-center z-40">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -40,7 +40,7 @@ const BottomNav = () => {
           );
         })}
       </nav>
-      <div className="fixed bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full z-50" />
+      <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full z-50" />
     </>
   );
 };
