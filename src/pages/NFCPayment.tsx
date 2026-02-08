@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import type { DotLottie } from '@lottiefiles/dotlottie-react';
 import { MastercardLogo, MigdalLogo } from '../assets/logos';
 import ApplePayAnimation from '../assets/animations/Apple Pay Face ID Checkout.lottie';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
@@ -9,6 +10,7 @@ import BottomNav from '../components/layout/BottomNav';
 const NFCPayment = () => {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
+  const dotLottieRef = useRef<DotLottie | null>(null);
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -16,9 +18,19 @@ const NFCPayment = () => {
     setIsAnimating(true);
   };
 
-  const handleAnimationComplete = () => {
-    setIsAnimating(false);
-  };
+  useEffect(() => {
+    if (dotLottieRef.current && isAnimating) {
+      const handleComplete = () => {
+        setIsAnimating(false);
+      };
+
+      dotLottieRef.current.addEventListener('complete', handleComplete);
+
+      return () => {
+        dotLottieRef.current?.removeEventListener('complete', handleComplete);
+      };
+    }
+  }, [isAnimating]);
 
   return (
     <div className="min-h-screen bg-gray-800 flex items-center justify-center py-8">
@@ -83,7 +95,9 @@ const NFCPayment = () => {
                     src={ApplePayAnimation}
                     loop={false}
                     autoplay={true}
-                    onComplete={handleAnimationComplete}
+                    dotLottieRefCallback={(dotLottie) => {
+                      dotLottieRef.current = dotLottie;
+                    }}
                     style={{ width: 160, height: 160 }}
                   />
                 </div>
