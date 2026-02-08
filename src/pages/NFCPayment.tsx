@@ -48,7 +48,7 @@ const NFCPayment = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex flex-col items-center justify-between pt-8 px-6 pb-32 min-h-[750px]">
+        <main className="flex flex-col items-center pt-8 px-6 pb-32 min-h-[750px]">
           {/* Virtual Card */}
           <div
             onClick={handleCardClick}
@@ -84,7 +84,7 @@ const NFCPayment = () => {
           </div>
 
           {/* Apple Pay Animation Section */}
-          <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-12">
             {/* Animation - Always rendered, shown/hidden with CSS */}
             <div className={`${isAnimating ? 'block' : 'hidden'}`}>
               <div className="relative flex items-center justify-center">
