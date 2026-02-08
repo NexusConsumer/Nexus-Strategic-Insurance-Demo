@@ -6,6 +6,7 @@ import { MastercardLogo, MigdalLogo } from '../assets/logos';
 import ApplePayAnimation from '../assets/animations/Apple Pay Face ID Checkout.lottie';
 // @ts-ignore
 import UnsuccessfulAnimation from '../assets/animations/Card Payment Unsuccessful.lottie';
+import nexusWideLogoAnimated from '../assets/logos/Nexus_Wide_Logo_Animation_Black_Whithout_Slogan.gif';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
 import BottomNav from '../components/layout/BottomNav';
 import SideMenu from '../components/layout/SideMenu';
@@ -110,17 +111,23 @@ const NFCPayment = () => {
         <IOSStatusBar />
 
         {/* Header */}
-        <header className="pt-14 px-6 flex justify-between items-center">
+        <header className="pt-14 px-6 flex justify-start items-center min-h-[60px] relative z-20">
           <button
             onClick={() => setIsMenuOpen(true)}
             className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center hover:opacity-80 transition-opacity"
           >
             <span className="material-icons-round text-lg">menu</span>
           </button>
-          <h1 className="text-3xl font-semibold tracking-tight" style={{ fontFamily: '-apple-system, SF Pro Display, system-ui, sans-serif' }}>
-            Wallet
-          </h1>
         </header>
+
+        {/* Animated Logo - Below menu button */}
+        <div className="absolute top-[68px] left-6 z-10">
+          <img
+            src={nexusWideLogoAnimated}
+            alt="Nexus"
+            className="h-10 w-auto object-contain"
+          />
+        </div>
 
         {/* Main Content */}
         <main className="flex flex-col items-center pt-8 pb-32 min-h-[750px]">
