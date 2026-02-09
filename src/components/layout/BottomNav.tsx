@@ -9,10 +9,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { path: '/', icon: 'home', labelHe: 'ראשי', labelEn: 'Home' },
-  { path: '/report', icon: 'report_problem', labelHe: 'דיווח', labelEn: 'Report' },
-  { path: '/nfc-payment', icon: 'account_balance_wallet', labelHe: 'ארנק', labelEn: 'Wallet' },
-  { path: '/profile', icon: 'person_outline', labelHe: 'פרופיל', labelEn: 'Profile' },
+  { path: '/checkout', icon: 'receipt_long', labelHe: 'רכישת פוליסה', labelEn: 'Buy Policy' },
+  { path: '/nfc-payment', icon: 'account_balance_wallet', labelHe: 'ארנק דיגיטלי', labelEn: 'Digital Wallet' },
+  { path: '/incident-report', icon: 'payments', labelHe: 'קבלת כספי ביטוח', labelEn: 'Get Insurance Money' },
+  { path: '/', icon: 'credit_card', labelHe: 'כרטיס הפוליסה שלי', labelEn: 'My Policy Card' },
 ];
 
 const BottomNav = () => {
@@ -21,7 +21,7 @@ const BottomNav = () => {
 
   return (
     <>
-      <nav className="absolute bottom-0 left-0 right-0 bg-surface-light/80 dark:bg-surface-dark/80 ios-blur border-t border-slate-100 dark:border-slate-800 px-8 py-4 pb-10 flex justify-between items-center z-40">
+      <nav className="absolute bottom-0 left-0 right-0 bg-white/90 dark:bg-surface-dark/90 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 px-8 pt-3 pb-16 flex justify-between items-center z-40">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -40,7 +40,7 @@ const BottomNav = () => {
           );
         })}
       </nav>
-      <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-slate-300 dark:bg-slate-700 rounded-full z-50" />
+      <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-black/20 dark:bg-white/20 rounded-full z-50" />
     </>
   );
 };

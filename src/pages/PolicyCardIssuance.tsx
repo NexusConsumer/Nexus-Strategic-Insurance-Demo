@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { MastercardLogo, MigdalLogo, GooglePayLogo, ApplePayLogo } from '../assets/logos';
 import IOSStatusBar from '../components/layout/IOSStatusBar';
 import BenefitsModal from '../components/BenefitsModal';
+import BottomNav from '../components/layout/BottomNav';
 
 const PolicyCardIssuance = () => {
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ const PolicyCardIssuance = () => {
         </header>
 
         {/* Main Content */}
-        <main className={`px-6 flex flex-col items-center pb-32 relative ${isBenefitsModalOpen ? 'z-0' : 'z-10'}`}>
+        <main className={`px-6 flex flex-col items-center pb-48 relative ${isBenefitsModalOpen ? 'z-0' : 'z-10'}`}>
           {/* Virtual Card Container */}
           <div className={`w-full max-w-sm relative flex items-center justify-center ${isBenefitsModalOpen ? 'z-0' : 'z-10'}`} style={{ minHeight: '220px' }}>
             {/* Virtual Card */}
@@ -361,8 +362,8 @@ const PolicyCardIssuance = () => {
           </div>
         </footer>
 
-        {/* iOS Home Indicator */}
-        <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-black/20 dark:bg-white/20 rounded-full z-50"></div>
+        {/* Bottom Navigation */}
+        <BottomNav />
 
         {/* Benefits Modal - Inside Phone Screen */}
         <BenefitsModal

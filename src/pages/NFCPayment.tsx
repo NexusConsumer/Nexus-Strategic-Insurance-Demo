@@ -10,6 +10,7 @@ import nexusWideLogoAnimated from '../assets/logos/Nexus_Wide_Logo_Animation_Bla
 import IOSStatusBar from '../components/layout/IOSStatusBar';
 import BottomNav from '../components/layout/BottomNav';
 import SideMenu from '../components/layout/SideMenu';
+import IOSNotification, { type NotificationType } from '../components/IOSNotification';
 
 const NFCPayment = () => {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -25,6 +26,11 @@ const NFCPayment = () => {
 
   // Side menu state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Notification state
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationType, setNotificationType] = useState<NotificationType>('success');
+  const [merchantName, setMerchantName] = useState('');
 
   // Drag to scroll handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -78,6 +84,11 @@ const NFCPayment = () => {
       setTimeout(() => {
         setIsAnimating(false);
         animationRef.current?.stop();
+
+        // Show success notification
+        setNotificationType('success');
+        setMerchantName('מרפאת בריאות');
+        setShowNotification(true);
       }, 6500);
     }
   };
@@ -101,6 +112,11 @@ const NFCPayment = () => {
       setTimeout(() => {
         setIsUnsuccessful(false);
         unsuccessfulRef.current?.stop();
+
+        // Show declined notification
+        setNotificationType('declined');
+        setMerchantName('גלידריית ג\'לטו');
+        setShowNotification(true);
       }, 3000);
     }
   };
@@ -284,6 +300,14 @@ const NFCPayment = () => {
 
       {/* Side Menu */}
       <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+      {/* iOS Notification */}
+      <IOSNotification
+        type={notificationType}
+        merchantName={merchantName}
+        isVisible={showNotification}
+        onClose={() => setShowNotification(false)}
+      />
     </div>
   );
 };
